@@ -9,8 +9,10 @@
 - [Criando Servidor Express](#startexpress)
 - [Criando Rotas no Express](#rotas)
 - [Estrutura de Pastas](#folders)
-- [variáveis de Ambiente](#dotenv)
+- [Variáveis de Ambiente](#dotenv)
 - [Configuração do Banco Dados](#database)
+- [Subindo Banco SQL Docker](#sqlDocker)
+- [Sintaxe SQL](#sqlSintaxe)
 
 
 <a id="start"></a>
@@ -162,9 +164,7 @@ No arquivo taskModels vamos selecionar todas as tarefas da tabela usando uma que
 
 Nessa pasta vamos deixar nossas funções que vão após os endpoints das rotas dessa forma quando houver algum problema de lógica os arquivos de funções estarão mais separados e não junto as rotas em sí.
 
-
-
-<a id="dotenv></>
+<a id="dotenv"></a>
 
 ## variáveis de ambiente com dotenv
 
@@ -196,7 +196,7 @@ Agora para usar uma variávei basta usar o método process.env.NOMEVARIAVEL apó
 
 > require("dotenv").config()
 
-<a id="database></>
+<a id="database"></a>
 
 ## Configurando banco de dados com docker
 
@@ -211,3 +211,48 @@ Criamos um arquivo chamado connectionModel.js onde vamos passar as variáveis de
 >    database: process.env.MYSQL_DATABASE,})
 
 > module.exports = connection
+
+Caso você tenha algum erro dessas variáveis de ambiente chame novamente o dotenv através de uma variável
+
+> const dotenv = require("dotenv").config()
+
+<a id="sqlDocker"></a>
+
+### Baixando e rodando um mysql com docker
+
+Para rodar o banco de dados vamos baixar uma imagem do docker hub e passar algumas configurações para essse container.
+
+> docker run --name to-do-mysql -e MYSQL_ROOT_PASSWORD=root123 -p 3306:3306 -d mysql
+
+No VS code use a extensão docker para administrar seus constainers, e use a extensão database client para fazer algumas query ao banco de dados.
+
+#### Usando extensão Connect to server
+
+Preencha o numero da porta que você usou na hora de dar start no container
+
+Preencha o Username de acordo com as variáveis que você definiu no arquivo .env
+
+Preenchar o Password de acordo com as variáveis que você definiu no arquivo .env
+
+<a id="sqlSintaxe"></a>
+
+### Sintaxe do SQL
+
+Dentro da extensão database após conectar com o banco vamos criar um banco e sua tabela
+
+> CREATE DATABASE IF NOT EXISTS todoList;
+
+> USE todoList;
+* Serve para ativar o banco de dados para escrevermos nesse banco
+
+> CREATE TABLE tasks (
+>    id INT PRIMARY KEY AUTO_INCREMENT,
+>    title VARCHAR(45) NOT NULL,
+>    status VARCHAR(45) NOT NULL,
+>    created_at VARCHAR(45) NOT NULL);
+
+Varchar aceita qualquer tipo de caracter os campos da tabela você define o nome no caso definimos id, title, status, created_at.
+
+Esse processo pode ser feito quando subimos o container tambem automatizando esse processo.
+
+Agora executamos as queries e conferimos pela extensão se foi criado todas as tabelas e seus campos
