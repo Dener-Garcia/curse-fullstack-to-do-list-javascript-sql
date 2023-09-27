@@ -13,6 +13,7 @@
 - [Configuração do Banco Dados](#database)
 - [Subindo Banco SQL Docker](#sqlDocker)
 - [Sintaxe SQL](#sqlSintaxe)
+- [Dicas do Projeto](#tips)
 
 
 <a id="start"></a>
@@ -164,6 +165,16 @@ No arquivo taskModels vamos selecionar todas as tarefas da tabela usando uma que
 
 Nessa pasta vamos deixar nossas funções que vão após os endpoints das rotas dessa forma quando houver algum problema de lógica os arquivos de funções estarão mais separados e não junto as rotas em sí.
 
+### Crie uma pasta dentro de src chamada middlewares
+
+Nessa pasta vamos alocar nossas lógicas de middlewares como a validação dos compos recebidos pelo post.
+Vamos validar basicamente duas coisas, se o campo title está vázio e se existe o campo title, veja mais no arquivo taskMiddleware.
+O interessante dessa função fica por conta do router onde primeiro vai chamar o função de validação e só depois a função de escrever no banco de dados.
+
+> router.post("/tasks", taskMiddleware.validadeBody, taskControllers.createdTask)
+
+Dentro do arquivo taskMiddleware existe um parametro chamado next onde após executar tudo ele vai executar a proxima função do router.post no caso taskControllers
+
 <a id="dotenv"></a>
 
 ## variáveis de ambiente com dotenv
@@ -226,7 +237,9 @@ Para rodar o banco de dados vamos baixar uma imagem do docker hub e passar algum
 
 No VS code use a extensão docker para administrar seus constainers, e use a extensão database client para fazer algumas query ao banco de dados.
 
-#### Usando extensão Connect to server
+#### Usando extensão Database Client
+
+Similar a um phpMyAdmin
 
 Preencha o numero da porta que você usou na hora de dar start no container
 
@@ -255,4 +268,81 @@ Varchar aceita qualquer tipo de caracter os campos da tabela você define o nome
 
 Esse processo pode ser feito quando subimos o container tambem automatizando esse processo.
 
-Agora executamos as queries e conferimos pela extensão se foi criado todas as tabelas e seus campos
+Agora executamos as queries e conferimos pela extensão se foi criado todas as tabelas e seus campos.
+Faça uma nova requisição a API pelo navegador ou pelo Postman, note que vai retornar 2 arrays só precisaremos do primeiro array 0: []
+
+#### Selectionando todos objetos numa tabela
+
+> SELECT * FROM nomedaTabela;
+
+#### Adicionando um item a tabela
+
+Cada ? corresponde ao valor desejado a ser inserido na coluna, nesse caso colocamos toda nossa query dentro de uma variável para depois poder escrever valores dentro dela, veja mais no arquivo taskModel.js
+
+> const query = 'INSERT INTO nomedaTabela(coluna1, coluna2, coluna3) VALUES (?, ?, ?)';
+
+#### Deletando um item da tabela
+
+Para deletar um item da tabela primeiro precisamos saber que item é esse então como parâmetro vamos usar o id.
+Traduzindo o código abaixo temos DELETE DA TABELA ONDE O ID SEJA IGUAL O ID PASSADO NO ARRAY
+
+>  const removeTask = await connection.execute('DELETE FROM nomedaTabela WHERE id = ?', [id])
+
+Para deletar um item não vamos passar um json e sim na própria URL
+
+> localhost:3003/tasks/nrIdDesejado 
+
+Se observar o arquivo do router quando adicionamos o :nomeDoParametro conseguimos utilizalo na função deleteTask dentro do arquivo taskControllers.js dessa forma ao fazer uma requisição de delete nós pegamos o parametro do request para usar na função
+
+> const { id } = req.params
+
+> router.delete("/tasks/:id", taskControllers.deleteTask)
+
+#### Editando um item da tabela
+
+Para atualizar uma task no banco de dados precisamos receber o id dela e os campos que seram alterados, e posteriormente atualizar o banco de dados.
+
+> const query = 'UPDATE tasks SET title = ?, status = ? WHERE id = ?';
+
+
+<a id="tips"></a>
+
+### Dicas do projeto
+
+* tasksModel.js
+    
+    Como ao fazer uma requisição o sql me devolve alem da minha tabela do banco um array de buffer temos 2 soluções para não receber esse array, selecionar o array desejado no return da function ou fazer uma desistruturação de array na const.
+
+> return tasks[0]
+
+>  const [tasks, buffer] = await connection.execute('SELECT * FROM tasks')
+
+#### Trabalhando com datas
+
+Vamos trabalhar com data em UTC dessa forma fica mais simples para trabalhar no front end, através do Date.now() que retorna o tempo decorrido em segundos desde 1970.
+Então através do método new Date() basta colocar dentro dele o Date.now
+
+> const today = new Date(Date.now()) 
+
+Usando esse método podemos utilizar alguns metódos como toLocaleDateString para retornar somente a data
+
+> today.toLocaleDateString()
+    * o retorno será: "9/26/2023" 
+
+Caso precise da data e hora basta usar o toLocaleString()
+
+> today.toLocaleSting()
+    * o retorno será: "9/26/2023, 5:52:16 PM" 
+
+#### Trabalhando com json
+
+Para nossa API entender e saber trabalhar com dados em json é necessário no arquivo app.js informar essa instrunção através do código abaixo:
+
+> app.use(expressServer.json())
+
+#### Pegando parametros da url e o body
+
+Na função de atualizar uma tarefa do banco de dados precisamos passar o id da tarefa e tambem todo o conteudo da tarefa para isso podemos usar o mesmo metódo de capturar o o parâmetro da URL através de uma const com { id } = req.params
+e agora podemos chamar a função de updateTask que realmente faz a alteração no banco tudo isso aproveitando o req dessa função do controller.
+
+> await taskModel.updateTask(id, req.body)
