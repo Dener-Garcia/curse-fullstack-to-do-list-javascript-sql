@@ -5,7 +5,7 @@ const router = require("./router.js")
 
 const app = expressServer()
 
-app.use(cors)
+app.use(cors())
 app.use(expressServer.json())
 app.use(router)
 

@@ -1,12 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link 
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <script src="./script.js" defer></script>
     <title>To Do List</title>
 </head>
+
 <body>
-    
+    <main>
+        <form class="add-form">
+            <input type="text" placeholder="Criar nova tarefa" class="input-task">
+            <button type="submit">Criar</button>
+        </form>
+
+        <section class="notes">
+
+            <div class="notes-fields">
+                <h3>Tarefa</h3>
+                <p>Title da tarefa</p>
+                <p>Title da tarefa</p>
+                <p>Title da tarefa</p>
+            </div>
+            
+            <div class="notes-fields">
+                <h3>Data</h3>
+                <p>14/09/1991</p>
+                <p>14/09/1991</p>
+                <p>14/09/1991</p>
+            </div>
+
+            <div class="notes-fields">
+                <h3>Status</h3>
+                <select>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Andamento">Andamento</option>
+                    <option value="Andamento">Concluído</option>
+                </select>
+                <select>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Andamento">Andamento</option>
+                    <option value="Andamento">Concluído</option>
+                </select>
+                <select>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Andamento">Andamento</option>
+                    <option value="Andamento">Concluído</option>
+                </select>
+            </div>
+
+            <div class="notes-fields">
+                <h3>Edição</h3>
+                <div class="notes-button">                
+                    <button type="button" aria-label="Lapís para editar uma nota">
+                        <span class="material-symbols-outlined">
+                            edit_note
+                        </span>
+                    </button>
+                    <button type="button" aria-label="Lixeira para deletar uma nota">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>
+                    </button>
+                </div>
+                <div class="notes-button">                
+                    <button type="button" aria-label="Lapís para editar uma nota">
+                        <span class="material-symbols-outlined">
+                            edit_note
+                        </span>
+                    </button>
+                    <button type="button" aria-label="Lixeira para deletar uma nota">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>
+                    </button>
+                </div>
+                <div class="notes-button">                
+                    <button type="button" aria-label="Lapís para editar uma nota">
+                        <span class="material-symbols-outlined">
+                            edit_note
+                        </span>
+                    </button>
+                    <button type="button" aria-label="Lixeira para deletar uma nota">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>
+                    </button>
+                </div>
+            </div>  
+        </section>
+    </main>
 </body>
+
 </html>
