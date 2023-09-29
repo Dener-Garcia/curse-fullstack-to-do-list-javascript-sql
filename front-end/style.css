@@ -68,16 +68,19 @@ form button{
 .notes-fields select{
     width: 100%;
     padding: 4px 16px;
+    border-radius: 8px;
 }
 
 .notes-fields .notes-button{
     height: 40px;
     display: flex;
     margin-top: 16px;
-    justify-content: space-evenly;
+    justify-content: center;
+    gap: 24px;
 }
 
 .notes-fields .notes-button button{
     padding: 4px;
+    border-radius: 8px;
     cursor: pointer;
 }
