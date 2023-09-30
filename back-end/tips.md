@@ -340,6 +340,22 @@ Para nossa API entender e saber trabalhar com dados em json é necessário no ar
 
 > app.use(expressServer.json())
 
+#### Trabalhando com desistruturação do Javascript
+
+Com esse recurso podemos pegar coisas de um objeto javascript para usar, veja por exemplo nas nossas funções dentro de model.js onde conseguimos pegar parametros ou mesmo tags do body.
+
+No Front end em script.js usamos essa mesma forma para pegar as informações do Json retornado da API para montar nosso html
+
+A desistruturacao é basicamente colocar entre chaves os valores que você quer pegar de um objeto, abaixo estamos retirando esses valores e criando uma const com esse nome, tudo isso de um objeto chamado task:
+
+> const {id, title, created_at, status} = task
+
+#### Trabalhando com desistruturação do Javascript
+
+Para adicionar uma tarefa vamos fazer um fetch mas vamos passar um objeto com as configurações que o end point precisa
+
+await fetch("http://localhost:3003/task", {objeto})
+
 #### Pegando parametros da url e o body
 
 Na função de atualizar uma tarefa do banco de dados precisamos passar o id da tarefa e tambem todo o conteudo da tarefa para isso podemos usar o mesmo metódo de capturar o o parâmetro da URL através de uma const com { id } = req.params

@@ -51,7 +51,8 @@ form button{
     background-color: #eff9ff;
 }
 
-.notes-fields{
+.notes-fields,
+.edit-task{
     width: 100%;
     padding: 8px;
     text-align: center;
