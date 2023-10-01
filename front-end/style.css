@@ -9,6 +9,14 @@ body{
     font-family: 'roboto', sans-serif;
 }
 
+.d-none{
+    display: none;
+}
+
+form{
+    border: solid 2px black;
+}
+
 form{
     width: 50%;
     height: auto;

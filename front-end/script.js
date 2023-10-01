@@ -46,28 +46,50 @@ const assemblyTask = (task) => {
   const { id, title, created_at, status } = task;
 
   const pTitle = createElement("p", title);
+  const editTitleInput = createElement("input")
+  editTitleInput.value = title
+  
   const pdate = createElement("p", formatDate(created_at));
 
   const selectStatus = createSelect(status);
+  selectStatus.addEventListener("change", ({target}) => {
+    updateStatusTask({...task, status: target.value})
+  })
 
   const noteBtns = document.createElement("div");
   noteBtns.classList.add("notes-button");
-  const editTask = createButton(
-    "button",
-    '<span class="material-symbols-outlined"> edit_note </span>'
-  );
+
+  const editTask = createButton("button", '<span class="material-symbols-outlined"> edit_note </span>');
+  
+  editTask.addEventListener("click", (e) => {
+    btnSaveTask.classList.remove("d-none")
+    editTask.classList.add("d-none")
+
+    pTitle.replaceWith(editTitleInput);
+    
+    btnSaveTask.addEventListener("click", (e) => {
+      updateStatusTask({...task, "title": editTitleInput.value})
+    }
+   )
+  })
+
+  const btnSaveTask = createButton("submit", '<span class="material-symbols-outlined"> save_as </span>')
+  btnSaveTask.classList.add("d-none")
+
   const deleteTask = createButton(
     "button",
     '<span class="material-symbols-outlined"> delete </span>'
   );
+
   deleteTask.addEventListener("click", ()=>{
-    console.log("cliquei no botao delete")
     deleteTasks(id)
   })
 
   titleTask.appendChild(pTitle);
+
   dateTask.appendChild(pdate);
   selectTask.appendChild(selectStatus);
+  noteBtns.appendChild(btnSaveTask)
   noteBtns.appendChild(editTask);
   noteBtns.appendChild(deleteTask);
   btnsEditTask.appendChild(noteBtns);
@@ -94,7 +116,22 @@ const addTask = async (event) => {
 }
 
 const deleteTasks = async (id)=>{
-  console.log("funcao deletear" + id)
+  await fetch(`http://localhost:3003/tasks/${id}`, {
+    method: "delete"
+  })
+
+  loadTask()
+  window.location.reload()
+}
+
+const updateStatusTask = async (task)=>{
+ const {id, title, status} = task
+  await fetch(`http://localhost:3003/tasks/${id}`, {
+    method: "put",
+    headers: {"content-type": "application/json"},
+    body: JSON.stringify({title, status})
+  })
+  window.location.reload();
 }
 
 const loadTask = async () => {
@@ -109,4 +146,3 @@ addTaskForm.addEventListener("submit", addTask)
 
 loadTask();
 
-console.log(sectionNote.innerHTML)

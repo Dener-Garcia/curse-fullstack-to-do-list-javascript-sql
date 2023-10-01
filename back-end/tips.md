@@ -363,6 +363,18 @@ e agora podemos chamar a função de updateTask que realmente faz a alteração 
 
 > await taskModel.updateTask(id, req.body)
 
+#### Atualizando uma task no banco de dados
+
+Na função de updateTask do front-end do arquivo script.js temos que enviar uma requisição ao servidor fazendo um fetch, no body passamos um objeto com as variáveis que retiramos por desistruturação do objeto "task", como nossa key (chave) lá no banco de dados chama "title" e "status" e ao fazer a desistruturação demos o mesmo nome não é necessário passar os dois valores conforme abaixo:
+
+> const [id, title, created_at, status] = task
+
+> body: JSON.stringify(task) {"title": title , "status": status}
+
+Podemos resumir da seguinte forma
+
+> body: JSON.stringify(task) {title, status}
+
 #### Problema de carregamento das tasks duplicado
 
 Ao inserir uma nova tarefa nós chamamos a função de loadTasks() porém ela mostra todas as tasks que ja foram carregadas anteriormente também.
