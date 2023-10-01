@@ -362,3 +362,26 @@ Na função de atualizar uma tarefa do banco de dados precisamos passar o id da 
 e agora podemos chamar a função de updateTask que realmente faz a alteração no banco tudo isso aproveitando o req dessa função do controller.
 
 > await taskModel.updateTask(id, req.body)
+
+#### Problema de carregamento das tasks duplicado
+
+Ao inserir uma nova tarefa nós chamamos a função de loadTasks() porém ela mostra todas as tasks que ja foram carregadas anteriormente também.
+
+Para resolver utilizei um metódo de recarregar a página após adicionar uma task nova.
+
+> window.location.reload();
+
+#### Formantando data UTC para pt-br
+
+Como retornarmos uma string no formato UTC podemos trabalhar esse formato criando uma função.
+
+Ao receber do banco de dados a string no momento de montar nossa task em assemblyTask() temos o campo created_at, então criamos uma nova função chamada formatDate(dateUTC).
+
+Nessa função recebemos um parametro (dateUTC) que é justamente a data vinda do banco de dados e então criamos um objeto com nossas configurações que é o estilo da data em si, depois usamos o metodo new Date e jogamos dentro dele a nossa data vinda do banco.
+
+> const formatDate = (dateUTC) => {
+> const optionDate = { dateStyle: "short", timeStyle: "short"}
+> const date = new Date(dateUTC).toLocaleString("pt-br", optionDate)
+> return date}
+
+ 

@@ -12,6 +12,12 @@ const fetchTasks = async () => {
   return tasks;
 };
 
+const formatDate = (dateUTC) => {
+  const optionDate = { dateStyle: "short", timeStyle: "short"}
+  const date = new Date(dateUTC).toLocaleString("pt-br", optionDate)
+  return date
+}
+
 const createElement = (tag, content = "") => {
   const element = document.createElement(tag);
   element.innerHTML = content;
@@ -40,7 +46,7 @@ const assemblyTask = (task) => {
   const { id, title, created_at, status } = task;
 
   const pTitle = createElement("p", title);
-  const pdate = createElement("p", created_at);
+  const pdate = createElement("p", formatDate(created_at));
 
   const selectStatus = createSelect(status);
 
@@ -54,6 +60,10 @@ const assemblyTask = (task) => {
     "button",
     '<span class="material-symbols-outlined"> delete </span>'
   );
+  deleteTask.addEventListener("click", ()=>{
+    console.log("cliquei no botao delete")
+    deleteTasks(id)
+  })
 
   titleTask.appendChild(pTitle);
   dateTask.appendChild(pdate);
@@ -80,15 +90,15 @@ const addTask = async (event) => {
 
     loadTask()
     inputTaskForm.value = ""
+    window.location.reload();
 }
 
-
+const deleteTasks = async (id)=>{
+  console.log("funcao deletear" + id)
+}
 
 const loadTask = async () => {
   const tasks = await fetchTasks();
-  
- sectionNote.innerHTML = ""
-
   tasks.forEach((task) => {
     const myTasks = assemblyTask(task);
     sectionNote.appendChild(myTasks);
@@ -99,4 +109,4 @@ addTaskForm.addEventListener("submit", addTask)
 
 loadTask();
 
-console.log(sectionNote)
+console.log(sectionNote.innerHTML)
