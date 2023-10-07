@@ -396,4 +396,6 @@ Nessa função recebemos um parametro (dateUTC) que é justamente a data vinda d
 > const date = new Date(dateUTC).toLocaleString("pt-br", optionDate)
 > return date}
 
- 
+O primeiro parametro dessa funcao vai ser o proprio elemento que estamos verificando
+e a funcao espera que retorna um valor verdadeiro ou falso 
+ const tasksFilteres = tasks.filter()

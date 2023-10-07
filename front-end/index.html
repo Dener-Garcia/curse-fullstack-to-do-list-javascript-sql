@@ -13,35 +13,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <script src="./script.js" defer></script>
-    <title>To Do List</title>
+    <title>To Do List Fullstack</title>
 </head>
 
 <body>
+    <header>
+        <h1>A disciplina é a organização da liberdade</h1>
+        <p>Se organize com esse to-do list!</p>
+        <p>Nesse projeto você pode adicionar, editar, remover e fazer buscas nas suas tarefaes diárias de um forma
+            simples e funcional.</p>
+    </header>
     <main>
         <form class="add-form">
-            <input type="text" placeholder="Criar nova tarefa" class="input-task">
-            <button type="submit">Criar</button>
+            <input type="text" placeholder="Criar uma tarefa" class="input-task">
+            <button type="submit" aria-label="criar uma nova tarefa"><span class="material-symbols-outlined">article</span></button>
+        </form>
+
+        <form class="filter-form">
+            <input type="text" placeholder="Pesquisar minhas tarefas" class="input-task">
+            <button type="submit" aria-label="pesquisar tarefas"><span class="material-symbols-outlined">search</span></button>
         </form>
 
         <section class="notes">
-
             <div class="notes-fields titleTask">
                 <h3>Tarefa</h3>
             </div>
-            
             <div class="notes-fields dateTask">
                 <h3>Data</h3>
             </div>
-
             <div class="notes-fields selectTask">
                 <h3>Status</h3>
             </div>
-
             <div class="notes-fields btnEditTasks">
-                <h3>Edição</h3>           
-            </div>  
+                <h3>Edição</h3>
+            </div>
         </section>
+        <div class="gridTasks"></div>
     </main>
+    <div class="modal-filtered">        
+        <a href="http://127.0.0.1:5500/front-end/index.html" id="close-modal" aria-label="fechar lista tarefas">X</a>
+    </div>
+    <footer>
+        <span>Feito por <a href="https://dener.criarbr.com" target="_blank">Dener Garcia</a></span>
+    </footer>
 </body>
 
 </html>
