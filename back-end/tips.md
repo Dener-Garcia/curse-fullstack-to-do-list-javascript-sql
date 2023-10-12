@@ -40,6 +40,8 @@ Quando uma dependência é só de desenvolvimento passe o -d como parâmetro.
 
 > npm install mysql2
 
+> npm install cors
+
 <a id="gitignore"></a>
 
 ## Configurando git ignore
