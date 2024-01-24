@@ -12,7 +12,7 @@ const notesFields = document.querySelectorAll(".notes-fields")
 const modalFiltered = document.querySelector(".modal-filtered")
 
 const fetchTasks = async () => {
-  const response = await fetch("https://apitodolist.criarbr/tasks");
+  const response = await fetch("https://apitodolist.criarbr.com/tasks");
   const tasks = await response.json();
   return tasks;
 };
@@ -132,7 +132,7 @@ const addTask = async (event) => {
     title: inputTaskForm.value
   }
 
-  await fetch("https://apitodolist.criarbr/tasks", {
+  await fetch("https://apitodolist.criarbr.com/tasks", {
     method: "post",
     headers: { "content-Type": "application/json" },
     body: JSON.stringify(myTask)
@@ -144,7 +144,7 @@ const addTask = async (event) => {
 }
 
 const deleteTasks = async (id) => {
-  await fetch(`https://apitodolist.criarbr/tasks/${id}`, {
+  await fetch(`https://apitodolist.criarbr.com/tasks/${id}`, {
     method: "delete"
   })
 
@@ -154,7 +154,7 @@ const deleteTasks = async (id) => {
 
 const updateStatusTask = async (task) => {
   const { id, title, status } = task
-  await fetch(`https://apitodolist.criarbr/tasks/${id}`, {
+  await fetch(`https://apitodolist.criarbr.com/tasks/${id}`, {
     method: "put",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ title, status })
