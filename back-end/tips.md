@@ -136,7 +136,7 @@ Para organizar as rotas vamos chamar funções dentro da pasta controllers em ve
 > const router = express.Router()
 
 ##### Exemplo de uma rota:  router.tipoRota("caminhoDaRota", (request, response) =>{funcaoDaRota})
-
+Dica: sempre que for usar rotas do tipo get para enviar requisições para uma api os parametros devem ser passados na propria URL e não no body.
 > router.get("/", (req, res) => res.status(200).send("O router funciona"))
 
 > module.exports = router
